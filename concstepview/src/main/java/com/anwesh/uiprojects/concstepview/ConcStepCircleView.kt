@@ -98,4 +98,46 @@ class ConcStepCircleView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class CSCNode(var i : Int, val state : State = State()) {
+        private var next : CSCNode? = null
+        private var prev : CSCNode? = null
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                this.next = CSCNode(this.i + 1)
+                this.next?.prev = this
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawCSCNode(i, state.scale, paint)
+            prev?.draw(canvas, paint)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : CSCNode {
+            var curr : CSCNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
