@@ -193,7 +193,7 @@ class ConcStepCircleView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : ConcStepCircleView {
             val view : ConcStepCircleView = ConcStepCircleView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
