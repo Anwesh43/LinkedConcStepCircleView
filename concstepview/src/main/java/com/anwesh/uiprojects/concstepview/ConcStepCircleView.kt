@@ -14,6 +14,27 @@ import android.content.Context
 
 val nodes : Int = 5
 
+fun Canvas.drawCSCNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = w / (nodes + 1)
+    val r : Float = gap / 5
+    paint.style = Paint.Style.STROKE
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / 60
+    paint.color = Color.parseColor("#4CAF50")
+    save()
+    translate(gap + gap * i, h/2)
+    for (j in 0..1) {
+        val ur : Float = r * (j + 1)
+        val sc : Float = Math.min(0.5f, Math.max(scale - 0.5f * j, 0f)) * 2
+        save()
+        drawArc(RectF(-ur, -ur, ur, ur), -90f + 180f * j, 180f * sc, false, paint)
+        restore()
+    }
+    restore()
+}
+
 class ConcStepCircleView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
