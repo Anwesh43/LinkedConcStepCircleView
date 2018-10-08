@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.concstepview
  * Created by anweshmishra on 09/10/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -185,6 +186,14 @@ class ConcStepCircleView(ctx : Context) : View(ctx) {
             csc.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : ConcStepCircleView {
+            val view : ConcStepCircleView = ConcStepCircleView(activity)
+            activity.setContentView(view)
+            return view 
         }
     }
 }
