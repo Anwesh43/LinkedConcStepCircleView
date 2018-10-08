@@ -163,4 +163,26 @@ class ConcStepCircleView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : ConcStepCircleView) {
+
+        private val animator : Animator = Animator(view)
+        private val csc : ConcStepCircle = ConcStepCircle(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            csc.draw(canvas, paint)
+            animator.animate {
+                csc.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            csc.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
